@@ -10,16 +10,48 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
+
 function ModalAddTask({isOpen, setIsOpen}) {
 
     const today = new Date();
     const[dateRange, setDateRange] = useState([today, today]);
     const[startDate, endDate] = dateRange;
-    const[priority, setPriority] = useState("media");
+    const[priority, setPriority] = useState("Média");
     const[category, setCategory] = useState("Estudos")
     const[title, setTitle] = useState("");
+    const[description, setDescription] = useState("");
+    const id = crypto.randomUUID();
+
+    function handleAddTask(e) {
+
+        e.preventDefault();
+
+        const newTask = {
+            id,
+            title,
+            description,
+            category,
+            priority,
+            startDate,
+            endDate
+        }
+
+        localStorage.setItem(`task${id}`, JSON.stringify(newTask));
+
+        setIsOpen(false);
+        setValue();
+    }
+
+    function setValue(){
+        setTitle("");
+        setDescription("");
+        setCategory("Estudos");
+        setPriority("Média");
+        setDateRange([today, today]);
+    }
 
     if(isOpen){
+
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                 <div className="absolute inset-0 bg-black/50" />
@@ -36,6 +68,7 @@ function ModalAddTask({isOpen, setIsOpen}) {
 
                             <h3>Descrição</h3>
                             <textarea className='w-full border border-gray-500 rounded-2xl p-2 placeholder-black'
+                                type="text" value={description} onChange={description_value => setDescription(description_value.target.value)}
                                 placeholder='Descreva a atividade'></textarea>
 
                             <h3>Período da atividade</h3>
@@ -58,9 +91,9 @@ function ModalAddTask({isOpen, setIsOpen}) {
                                 </SelectTrigger>
 
                                 <SelectContent className='rounded-2xl placeholder-black'>
-                                    <SelectItem className='border rounded-2xl placeholder-black' value="alta">Alta</SelectItem>
-                                    <SelectItem className='rounded-2xl placeholder-black' value="media">Média</SelectItem>
-                                    <SelectItem className='rounded-2xl placeholder-black' value="baixa">Baixa</SelectItem>
+                                    <SelectItem className='border rounded-2xl placeholder-black' value="Alta">Alta</SelectItem>
+                                    <SelectItem className='rounded-2xl placeholder-black' value="Média">Média</SelectItem>
+                                    <SelectItem className='rounded-2xl placeholder-black' value="Baixa">Baixa</SelectItem>
                                 </SelectContent>
                             </Select>
 
@@ -84,7 +117,11 @@ function ModalAddTask({isOpen, setIsOpen}) {
                     </main>
                     <div className='flex justify-end gap-2 mt-4'>
                         <button onClick={() => setIsOpen(false)} className='bg-gray-300 text-black rounded-2xl p-2 px-4'>Cancelar</button>
-                        <button type="submit" disabled={!title} className='bg-[#D12474] text-white rounded-2xl p-2 px-4 transition disabled:opacity-50 disabled:cursor-not-allowed'>Adicionar</button>
+                        <button type="submit"
+                            onClick={handleAddTask} 
+                            disabled={!title} 
+                            className='bg-[#D12474] text-white rounded-2xl p-2 px-4 transition disabled:opacity-50 disabled:cursor-not-allowed'
+                            >Adicionar</button>
                     </div>
                 </div>
             </div>

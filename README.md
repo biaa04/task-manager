@@ -1,16 +1,74 @@
-# React + Vite
+# Gerenciador de Tarefas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O gerenciador de tarefas é uma ferramenta idealizada para lhe auxiliar no gerenciamento de demandas semanais, ele é um projeto inicial desenvolvido com o objetivo de botar em prática conhecimentos aprendidos sobre JavaScript, React, HTML, TailwindCSS e armazenamento de dados por Locale Storage.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Adicionar tarefa
+- [x] Remover tarefa
+- [x] Editar tarefa
+- [x] Filtrar por semana
+- [x] Componente para tarefas concluídas
+- [x] Componente para tarefas sem data específica
+- [x] Tela de informações
 
-## React Compiler
+## Tecnologias usadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- JavaScript
+- HTML
+- TailwindCSS
+- Vite
 
-## Expanding the ESLint configuration
+## Como usar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+
+# Clone o repositório
+git clone https://github.com/biaa04/task-manager.git
+
+# Entra no diretório do repositório
+cd task-manager
+
+# Instala as dependências (exemplo npm)
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+
+```
+## Estrutura do projeto
+```bash
+src/
+├── components/
+|   ├──ui/
+|       ├──select,jsx
+│   ├── Task.jsx
+│   ├── TaskColumn.jsx
+|   ├── TaskPage.jsx
+|   ├── TaskCompleted.jsx
+│   ├── AddTask.jsx
+│   └── ModalAddTask.jsx
+├── Home.jsx
+├── TaskPage.jsx
+├── App.jsx
+└── main.jsx
+```
+
+## Melhorias futuras
+
+- [ ] Confirmação antes de excluir uma tarefa
+- [ ] Melhoria visual das telas
+- [ ] Integração com backend
+- [ ] Otimização do código
+
+## Autora
+
+**Beatriz Andrade**
+
+- GitHub: https://github.com/biaa04
+- LinkedIn: www.linkedin.com/in/beatriz-andrade-94b38b233
+
+
+
+

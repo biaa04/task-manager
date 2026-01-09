@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 
 
-function ModalAddTask({isOpen, setIsOpen}) {
+function ModalAddTask({isOpen, setIsOpen, setTasks}) {
 
     const today = new Date();
     const[dateRange, setDateRange] = useState([today, today]);
@@ -21,6 +21,8 @@ function ModalAddTask({isOpen, setIsOpen}) {
     const[title, setTitle] = useState("");
     const[description, setDescription] = useState("");
     const id = crypto.randomUUID();
+    const[status, setStatus] = useState("Pendente");
+    const[isDateRangeSelected, setIsDateRangeSelected] = useState(false);
 
     function handleAddTask(e) {
 
@@ -33,11 +35,13 @@ function ModalAddTask({isOpen, setIsOpen}) {
             category,
             priority,
             startDate,
-            endDate
+            endDate,
+            status,
         }
 
         localStorage.setItem(`task${id}`, JSON.stringify(newTask));
 
+        setTasks(prev => [...prev, newTask]);
         setIsOpen(false);
         setValue();
     }
@@ -58,7 +62,7 @@ function ModalAddTask({isOpen, setIsOpen}) {
                 <div className="p-4 relative w-[60%] max-h-[90vh] bg-white rounded-2xl shadow-xl flex flex-col animate-fade-in">
                     <header className='flex p-2 justify-between'>
                         <h2 className="text-2xl font-bold mb-4 text-[#D12474]">Adicionar Nova Tarefa</h2>
-                        <button className='text-[#D12474]' onClick={() => setIsOpen(false)}><X /></button>
+                        <button className='text-[#D12474]' onClick={() => (setIsOpen(false), setValue())}><X /></button>
                     </header>
                     <main className='overflow-y-auto flex-1'>
                         <div className='flex flex-col gap-2 p-2'>
@@ -73,17 +77,29 @@ function ModalAddTask({isOpen, setIsOpen}) {
 
                             <h3>Período da atividade</h3>
                             
-                            <DatePicker
-                                className='w-full border border-gray-500 rounded-2xl p-2 placeholder-black'
-                                wrapperClassName="w-full"
-                                selectsRange
-                                startDate={startDate}
-                                endDate={endDate}
-                                onChange={(update) => setDateRange(update)}
-                                dateFormat="dd/MM/yyyy"
-                                isClearable
-                            />
-                            
+                            <div className='relative w-fit'>
+                                <DatePicker
+                                    className={`border border-black shadow-md rounded-2xl p-2 pr-10 ${
+                                            isDateRangeSelected ? "bg-gray-100 cursor-not-allowed" : ""
+                                        }`}
+                                    selectsRange
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={(update) => setDateRange(update)}
+                                    dateFormat="dd/MM/yyyy"
+                                    disabled={isDateRangeSelected}
+                                    isClearable={!isDateRangeSelected}
+                                />
+                            </div>
+
+                            <label className='p-1'>
+                                <input type="checkbox" 
+                                onClick={() => {
+                                    !isDateRangeSelected ? (setIsDateRangeSelected(true), setDateRange([null, null])) : (setIsDateRangeSelected(false), setDateRange([today, today]));
+                                }} />
+                                Desejo adicionar o período da atividade mais tarde
+                            </label>  
+
                             <h3>Prioridade</h3>
                             <Select value={priority} onValueChange={(value) => setPriority(value)}>
                                 <SelectTrigger className='w-full border border-gray-500 rounded-2xl p-4 placeholder-black'>
@@ -116,7 +132,7 @@ function ModalAddTask({isOpen, setIsOpen}) {
 
                     </main>
                     <div className='flex justify-end gap-2 mt-4'>
-                        <button onClick={() => setIsOpen(false)} className='bg-gray-300 text-black rounded-2xl p-2 px-4'>Cancelar</button>
+                        <button onClick={() => (setIsOpen(false), setValue())} className='bg-gray-300 text-black rounded-2xl p-2 px-4'>Cancelar</button>
                         <button type="submit"
                             onClick={handleAddTask} 
                             disabled={!title} 

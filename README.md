@@ -61,6 +61,7 @@ src/
 - [ ] Melhoria visual das telas
 - [ ] Integração com backend
 - [ ] Otimização do código
+- [ ] Adicionar checklist
 
 ## Autora
 
